@@ -25,7 +25,7 @@ export DIUN_ENTRY_CREATED111=$DIUN_ENTRY_CREATED
 export DIUN_ENTRY_PLATFORM111=$DIUN_ENTRY_PLATFORM
 
 
-DIUN_ENTRY_CREATED111="$(echo "$DIUN_ENTRY_CREATED111" | cut -d \  -f1-2)"
+DIUN_ENTRY_CREATED111="$(echo "$DIUN_ENTRY_CREATED111" | cut -d . -f1)"
 function qywx()
 {
     RET=$(/data/tools/curl -s https://qyapi.weixin.qq.com/cgi-bin/gettoken?"corpid="${CORPID}"&corpsecret="${CORP_SECRET}"")
