@@ -12,6 +12,7 @@ AGENTID=""
 MEDIA_ID=""
 TOUSER="@all"
 
+
 export DIUN_VERSION111=$DIUN_VERSION
 export DIUN_ENTRY_STATUS111=$DIUN_ENTRY_STATUS
 export DIUN_HOSTNAME111=$DIUN_HOSTNAME
@@ -22,8 +23,9 @@ export DIUN_ENTRY_MIMETYPE111=$DIUN_ENTRY_MIMETYPE
 export DIUN_ENTRY_DIGEST111=$DIUN_ENTRY_DIGEST
 export DIUN_ENTRY_CREATED111=$DIUN_ENTRY_CREATED
 export DIUN_ENTRY_PLATFORM111=$DIUN_ENTRY_PLATFORM
-DIUN_ENTRY_CREATED111="$(echo "$DIUN_ENTRY_CREATED111" | cut -d \  -f1-2)"
 
+
+DIUN_ENTRY_CREATED111="$(echo "$DIUN_ENTRY_CREATED111" | cut -d \  -f1-2)"
 function qywx()
 {
     RET=$(/data/tools/curl -s https://qyapi.weixin.qq.com/cgi-bin/gettoken?"corpid="${CORPID}"&corpsecret="${CORP_SECRET}"")
@@ -31,7 +33,7 @@ function qywx()
 
     
 
-    cat>tmp_qywx<<EOF
+    cat>/data/tmp_qywx<<EOF
 {
    "touser" : "${TOUSER}",
    "msgtype" : "news",
@@ -51,21 +53,23 @@ function qywx()
 }
 EOF
 
-    /data/tools/curl -d @tmp_qywx -XPOST https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token="${KEY}"
+    /data/tools/curl -d @/data/tmp_qywx -XPOST https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token="${KEY}"
+    rm /data/tmp_qywx
 }
 
 
 function telegram()
 {
     TG_URL='https://api.telegram.org/bot'${TG_TOKEN}'/sendMessage'
-    cat>tmp_tg<<EOF
+    cat>/data/tmp_tg<<EOF
 {
     "chat_id": "${TG_CHAT_ID}",
     "parse_mode":"Markdown",
     "text": "*DOCKER有更新啦~*\n\n*容         器：* ${DIUN_HOSTNAME111}\n*镜         像：* ${DIUN_ENTRY_IMAGE111}\n*创建时间：* ${DIUN_ENTRY_CREATED111}\n*平         台：* ${DIUN_ENTRY_PLATFORM111}\n"
 }
 EOF
-    /data/tools/curl --location --request POST ${TG_URL} --header 'Content-Type: application/json' -d @tmp_tg
+    /data/tools/curl --location --request POST ${TG_URL} --header 'Content-Type: application/json' -d @/data/tmp_tg
+    rm /data/tmp_tg
 
 }
 
