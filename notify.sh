@@ -24,8 +24,10 @@ export DIUN_ENTRY_DIGEST111=$DIUN_ENTRY_DIGEST
 export DIUN_ENTRY_CREATED111=$DIUN_ENTRY_CREATED
 export DIUN_ENTRY_PLATFORM111=$DIUN_ENTRY_PLATFORM
 
-imagename="$(echo "$DIUN_ENTRY_IMAGE111" | cut -d / -f3)"
-imagename="$(echo "$imagename" | sed 's/[:][:]*//g')"
+imagename1="$(echo "$DIUN_ENTRY_IMAGE111" | cut -d / -f3)"
+imagename2="$(echo "$DIUN_ENTRY_IMAGE111" | cut -d / -f2-3)"
+imagename3="$(echo "$imagename1" | cut -d : -f1)"
+imagename="$(echo "$imagename1" | sed 's/[:][:]*//g')"
 DIUN_ENTRY_CREATED111="$(echo "$DIUN_ENTRY_CREATED111" | cut -d . -f1)"
 function qywx()
 {
@@ -42,9 +44,10 @@ function qywx()
    "news" : {
        "articles":[
            {
-               "title": "DOCKER有更新啦~",
-               "description": "镜       像： ${DIUN_ENTRY_IMAGE111}\n创建时间： ${DIUN_ENTRY_CREATED111}\n平       台： ${DIUN_ENTRY_PLATFORM111}\n",
-               "picurl": "https://www.bing.com/th?id=OHR.ShadowEverest_EN-US0301475882_UHD.jpg&w=1000"
+               "title": "${imagename3} 更新啦~",
+               "description": "镜       像： ${imagename2}\n创建时间： ${DIUN_ENTRY_CREATED111}\n平       台： ${DIUN_ENTRY_PLATFORM111}\n",
+               "picurl": "https://bingw.jasonzeng.dev/?resolution=UHD&index=random",
+               "url": "${DIUN_ENTRY_HUBLINK111}"
             }
        ]
    },
@@ -66,7 +69,7 @@ function telegram()
 {
     "chat_id": "${TG_CHAT_ID}",
     "parse_mode":"Markdown",
-    "text": "*DOCKER有更新啦~*\n\n*镜         像：* ${DIUN_ENTRY_IMAGE111}\n*创建时间：* ${DIUN_ENTRY_CREATED111}\n*平         台：* ${DIUN_ENTRY_PLATFORM111}\n"
+    "text": "*${imagename3} 更新啦~*\n\n*镜         像：* ${imagename2}\n*地         址：* ${DIUN_ENTRY_HUBLINK111}\n*创建时间：* ${DIUN_ENTRY_CREATED111}\n*平         台：* ${DIUN_ENTRY_PLATFORM111}\n"
 }
 EOF
     /data/tools/curl --location --request POST ${TG_URL} --header 'Content-Type: application/json' -d @/data/${imagename}_tg
