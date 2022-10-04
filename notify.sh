@@ -1,18 +1,6 @@
 #!/bin/sh
 
-
-#电报参数
-TG_CHAT_ID=""
-TG_TOKEN=""
-
-#企微参数
-CORPID=""
-CORP_SECRET=""
-AGENTID=""
-MEDIA_ID=""
-TOUSER="@all"
-
-
+. /data/user.conf
 export DIUN_VERSION111=$DIUN_VERSION
 export DIUN_ENTRY_STATUS111=$DIUN_ENTRY_STATUS
 export DIUN_HOSTNAME111=$DIUN_HOSTNAME
@@ -29,6 +17,31 @@ imagename2="$(echo "$DIUN_ENTRY_IMAGE111" | cut -d / -f2-3)"
 imagename3="$(echo "$imagename1" | cut -d : -f1)"
 imagename="$(echo "$imagename1" | sed 's/[:][:]*//g')"
 DIUN_ENTRY_CREATED111="$(echo "$DIUN_ENTRY_CREATED111" | cut -d . -f1)"
+
+function bark()
+{   
+    BARK_URL="https://api.day.app/push"
+
+    cat>/data/${imagename}_bark<<EOF
+{
+    "title": "${imagename3} 更新啦~",
+    "body": "镜像： ${imagename2}\n时间： ${DIUN_ENTRY_CREATED111}\n平台： ${DIUN_ENTRY_PLATFORM111}\n",
+    "device_key": "${BARK_KEY}",
+    "badge": 1,
+    "sound": "minuet.caf",
+    "icon": "https://crazymax.dev/diun/assets/logo.png",
+    "group": "Docker_update",
+    "url": "${DIUN_ENTRY_HUBLINK111}"
+}
+EOF
+
+    /data/tools/curl -d @/data/${imagename}_bark -XPOST https://api.day.app/push --header 'Content-Type: application/json; charset=utf-8' 
+    rm /data/${imagename}_bark
+
+
+}
+
+
 function qywx()
 {
     RET=$(/data/tools/curl -s https://qyapi.weixin.qq.com/cgi-bin/gettoken?"corpid="${CORPID}"&corpsecret="${CORP_SECRET}"")
@@ -87,4 +100,10 @@ if [ ! -n "${CORP_SECRET}" ]; then
     echo "未配置企业微信参数或者配置不全，跳过通知！"
 else
     qywx
+fi
+
+if [ ! -n "${BARK_KEY}" ]; then
+    echo "未配置Bark参数，跳过通知！"
+else
+    bark
 fi
