@@ -46,7 +46,6 @@ function qywx()
            {
                "title": "${imagename3} 更新啦~",
                "description": "镜       像： ${imagename2}\n创建时间： ${DIUN_ENTRY_CREATED111}\n平       台： ${DIUN_ENTRY_PLATFORM111}\n",
-               "picurl": "https://bingw.jasonzeng.dev/?resolution=UHD&index=random",
                "url": "${DIUN_ENTRY_HUBLINK111}"
             }
        ]
