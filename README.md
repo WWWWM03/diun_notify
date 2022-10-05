@@ -112,17 +112,13 @@ docker run -d --name diun \
 docker exec -it **[容器名]** diun notif test
 ```
 
-![image](https://user-images.githubusercontent.com/74545085/194116386-1477a9cb-35f5-45d8-ad24-2d5028bbfd85.png)
-TG推送通道
+![image](https://user-images.githubusercontent.com/74545085/194116386-1477a9cb-35f5-45d8-ad24-2d5028bbfd85.png)TG推送通道
 
-![image](https://user-images.githubusercontent.com/74545085/194116469-cc4d6046-c1c4-4bf9-b06c-daa6876e691c.png)
-discord推送通道
+![image](https://user-images.githubusercontent.com/74545085/194116469-cc4d6046-c1c4-4bf9-b06c-daa6876e691c.png)discord推送通道
 
-![image](https://user-images.githubusercontent.com/74545085/194116502-45a70cf9-5a66-4647-86d0-618d8ab2ef5c.png)
-TG推送通道
+![image](https://user-images.githubusercontent.com/74545085/194116502-45a70cf9-5a66-4647-86d0-618d8ab2ef5c.png)TG推送通道
 
-![image](https://user-images.githubusercontent.com/74545085/194116536-c7e8849f-ffbb-4d48-a5ff-f1a8d34617eb.png)
-企微推送通道
+![image](https://user-images.githubusercontent.com/74545085/194116536-c7e8849f-ffbb-4d48-a5ff-f1a8d34617eb.png)企微推送通道
 
 **感谢这位大佬的脚本，我在它的基础上魔改了推送脚本的内容。**
 https://github.com/Qliangw/emby_notify
