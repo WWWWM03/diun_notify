@@ -48,7 +48,7 @@ notif:
         - "DIUN_ENTRY_PLATFORM"        
 #下面是discord推送,如不需要自行删除
    discord:
-     webhookURL: **[webhookURL]**
+     webhookURL: [webhookURL]
      mentions:
        - "@everyone"
      renderFields: true
@@ -58,14 +58,14 @@ notif:
       
 regopts:
   - name: "myregistry"
-    username: **[dockerhub_username]**
-    password: **[dockerhub_password]**
+    username: [dockerhub_username]
+    password: [dockerhub_password]
     timeout: 20s
     insecureTLS: true
   - name: "docker.io"
     selector: image
-    username: **[dockerhub_username]**
-    password: **[dockerhub_password]**
+    username: [dockerhub_username]
+    password: [dockerhub_password]
 
 providers:
   docker:
@@ -99,9 +99,9 @@ docker run -d --name diun \
   -e "LOG_JSON=false" \
   -e "DIUN_PROVIDERS_DOCKER=true" \
   -e "DIUN_PROVIDERS_FILE_FILENAME=/custom-images.yml" \
-  -v "**[替换path]**:/data" \
-  -v "**[替换path]**/custom-images.yml:/custom-images.yml:ro" \
-  -v "**[替换path]**/diun.yml:/diun.yml:ro" \
+  -v "[替换path]:/data" \
+  -v "[替换path]/custom-images.yml:/custom-images.yml:ro" \
+  -v "[替换path]/diun.yml:/diun.yml:ro" \
   -v "/var/run/docker.sock:/var/run/docker.sock" \
   crazymax/diun:latest
 ```
@@ -109,7 +109,7 @@ docker run -d --name diun \
 4.测试通知。
 
 ```bash
-docker exec -it **[容器名]** diun notif test
+docker exec -it [容器名] diun notif test
 ```
 
 ![image](https://user-images.githubusercontent.com/74545085/194116386-1477a9cb-35f5-45d8-ad24-2d5028bbfd85.png)TG推送通道
