@@ -1,0 +1,9 @@
+# /custom-images.yml
+- name: yipengfei/movie-robot:beta
+- name: linuxserver/emby:beta
+- name: linuxserver/overseerr:latest
+- name: linuxserver/tautulli:latest
+- name: lscr.io/linuxserver/plex:latest
+- name: 6053537/portainer-ce
+- name: linuxserver/emby:latest
+- name: vergilgao/mdc:latest
