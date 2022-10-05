@@ -1,0 +1,47 @@
+# /diun.yml
+db:
+  path: "/data/diun.db"
+
+watch:
+  workers: 20
+  schedule: "CRON_TZ=Asia/Shanghai */5 * * * *"
+  firstCheckNotif: true
+
+notif:
+  script:
+      cmd: "/data/notify.sh"
+      args:
+        - "DIUN_VERSION"
+        - "DIUN_ENTRY_STATUS"
+        - "DIUN_HOSTNAME"
+        - "DIUN_ENTRY_PROVIDER"
+        - "DIUN_ENTRY_IMAGE"
+        - "DIUN_ENTRY_HUBLINK"
+        - "DIUN_ENTRY_MIMETYPE"
+        - "DIUN_ENTRY_DIGEST"
+        - "DIUN_ENTRY_CREATED"
+        - "DIUN_ENTRY_PLATFORM"        
+#下面是discord推送,如不需要自行删除
+   discord:
+     webhookURL: [webhookURL]
+     mentions:
+       - "@everyone"
+     renderFields: true
+     timeout: 10s
+     templateBody: |
+       Docker tag {{ .Entry.Image }} which you subscribed to through {{ .Entry.Provider }} provider has been released.
+      
+regopts:
+  - name: "myregistry"
+    username: [dockerhub_username]
+    password: [dockerhub_password]
+    timeout: 20s
+    insecureTLS: true
+  - name: "docker.io"
+    selector: image
+    username: [dockerhub_username]
+    password: [dockerhub_password]
+
+providers:
+  docker:
+    watchStopped: true
