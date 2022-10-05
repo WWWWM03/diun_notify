@@ -16,7 +16,21 @@ imagename1="$(echo "$DIUN_ENTRY_IMAGE111" | cut -d / -f3)"
 imagename2="$(echo "$DIUN_ENTRY_IMAGE111" | cut -d / -f2-3)"
 imagename3="$(echo "$imagename1" | cut -d : -f1)"
 imagename="$(echo "$imagename1" | sed 's/[:][:]*//g')"
-DIUN_ENTRY_CREATED111="$(echo "$DIUN_ENTRY_CREATED111" | cut -d . -f1)"
+DIUN_ENTRY_CREATED222="$(echo "$DIUN_ENTRY_CREATED111" | cut -d . -f1)"
+time_end="$(echo "$DIUN_ENTRY_CREATED111" | cut -d \  -f3)"
+
+
+if [  "$time_end" = "+0000" ]; then
+    time="$DIUN_ENTRY_CREATED222"
+    seconds=`date -d "$time" +%s`
+    seconds_cst=`expr $seconds + 28800`
+    DIUN_ENTRY_CREATED111=`date -d @$seconds_cst "+%Y-%m-%d %H:%M:%S"`
+    # echo $DIUN_ENTRY_CREATED  ${imagename2} "utc" $DIUN_ENTRY_CREATED111  >> /data/log.txt
+else
+    DIUN_ENTRY_CREATED111=$DIUN_ENTRY_CREATED222
+    # echo $DIUN_ENTRY_CREATED  ${imagename2} "cst" $DIUN_ENTRY_CREATED111  >> /data/log.txt
+fi
+
 
 function bark()
 {   
