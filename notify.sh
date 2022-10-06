@@ -55,6 +55,37 @@ EOF
 
 }
 
+function qywx()
+{
+    RET=$(/data/tools/curl -s https://qyapi.weixin.qq.com/cgi-bin/gettoken?"corpid="${CORPID}"&corpsecret="${CORP_SECRET}"")
+    KEY=$(echo ${RET} | /data/tools/jq -r .access_token)
+
+    
+
+    cat>/data/${imagename}_qywx<<EOF
+{
+   "touser" : "${TOUSER}",
+   "msgtype" : "news",
+   "agentid" : "${AGENTID}",
+   "news" : {
+       "articles":[
+           {
+               "title": "${imagename3} 更新啦~",
+               "description": "镜       像： ${imagename2}\n创建时间： ${DIUN_ENTRY_CREATED111}\n平       台： ${DIUN_ENTRY_PLATFORM111}\n",
+               "url": "${DIUN_ENTRY_HUBLINK111}"
+            }
+       ]
+   },
+   "enable_id_trans": 0,
+   "enable_duplicate_check": 0,
+   "duplicate_check_interval": 1800
+}
+EOF
+
+    /data/tools/curl -d @/data/${imagename}_qywx -XPOST https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token="${KEY}"
+    rm /data/${imagename}_qywx
+}
+
 
 function qywxurl()
 {
@@ -63,7 +94,7 @@ function qywxurl()
 
     
 
-    cat>/data/${imagename}_qywx<<EOF
+    cat>/data/${imagename}_qywxurl<<EOF
 {
    "touser" : "${TOUSER}",
    "msgtype" : "news",
@@ -84,8 +115,8 @@ function qywxurl()
 }
 EOF
 
-    /data/tools/curl -d @/data/${imagename}_qywx -XPOST https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token="${KEY}"
-    rm /data/${imagename}_qywx
+    /data/tools/curl -d @/data/${imagename}_qywxurl -XPOST https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token="${KEY}"
+    rm /data/${imagename}_qywxurl
 }
 
 
@@ -148,6 +179,8 @@ if [ ! -n "${CORP_SECRET}" ]; then
     echo "未配置企业微信参数或者配置不全，跳过通知！"
 elif [[ "$MEDIA_ID" = "http"* ]]; then
     qywxurl
+elif [ "$MEDIA_ID" = "" ]; then
+    qywx
 else  
     qywxmediaid
 fi
