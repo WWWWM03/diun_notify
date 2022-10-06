@@ -146,7 +146,7 @@ fi
 
 if [ ! -n "${CORP_SECRET}" ]; then
     echo "未配置企业微信参数或者配置不全，跳过通知！"
-elif [[ "$MEDIA_ID" = "https://"* ]]; then
+elif [[ "$MEDIA_ID" = "http"* ]]; then
     qywxurl
 else  
     qywxmediaid
