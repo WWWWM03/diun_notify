@@ -11,7 +11,9 @@ export DIUN_ENTRY_DIGEST111=$DIUN_ENTRY_DIGEST
 export DIUN_ENTRY_CREATED111=$DIUN_ENTRY_CREATED
 export DIUN_ENTRY_PLATFORM111=$DIUN_ENTRY_PLATFORM
 
-DIUN_ENTRY_HUBLINK111="${DIUN_ENTRY_HUBLINK111}/tags"
+if [ "${DIUN_ENTRY_HUBLINK111}" ]; then
+    DIUN_ENTRY_HUBLINK111="${DIUN_ENTRY_HUBLINK111}/tags"
+fi
 imagename1="$(echo "$DIUN_ENTRY_IMAGE111" | cut -d / -f3)"
 imagename2="$(echo "$DIUN_ENTRY_IMAGE111" | cut -d / -f2-3)"
 imagename3="$(echo "$imagename1" | cut -d : -f1)"
