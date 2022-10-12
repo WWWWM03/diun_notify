@@ -170,6 +170,52 @@ EOF
 
 }
 
+function discord()
+{
+    DISCORD_URL=${DISCORD_WEBHOOK}
+    cat>/data/${imagename}_discord<<EOF
+
+{   
+    
+    "avatar_url": "https://crazymax.dev/diun/assets/logo.png",
+    "username": "Diun推送",
+    "tts": true,
+    "embeds": [
+      {
+        "color": 5486156,
+        "image": {
+          "url": "${DISCORD_PICURL}"
+        },
+        "fields": [
+          {
+            "name": "镜像",
+            "value": "${imagename2}"
+          },
+          {
+            "name": "创建时间",
+            "value": "${DIUN_ENTRY_CREATED111}"
+          },
+          {
+            "name": "平台",
+            "value": "${DIUN_ENTRY_PLATFORM111}"
+          }
+        ],
+        "title": "${imagename3} 更新啦~",
+        "description": "",
+        "footer": {
+          "text": "推送时间",
+          "icon_url": ""
+        },
+        "timestamp": "$(date "+%Y-%m-%dT%H:%M:%S%:z")",
+        "url": "${DIUN_ENTRY_HUBLINK111}"
+      }
+    ]
+}
+EOF
+    /data/tools/curl --location --request POST ${DISCORD_URL} --header 'Content-Type: application/json' -d @/data/${imagename}_discord
+    rm /data/${imagename}_discord
+}
+
 
 if [ ! -n "${TG_TOKEN}" ]; then
     echo "未配置电报参数或者配置不全，跳过通知！"
@@ -191,4 +237,10 @@ if [ ! -n "${BARK_KEY}" ]; then
     echo "未配置Bark参数，跳过通知！"
 else
     bark
+fi
+
+if [ ! -n "${DISCORD_WEBHOOK}" ]; then
+    echo "未配置DISCORD_WEBHOOK参数或者配置不全，跳过通知！"
+else
+    discord
 fi
