@@ -46,27 +46,7 @@ notif:
         - "DIUN_ENTRY_DIGEST"
         - "DIUN_ENTRY_CREATED"
         - "DIUN_ENTRY_PLATFORM"        
-#下面是discord推送,如不需要自行删除
-   discord:
-     webhookURL: [webhookURL]
-     mentions:
-       - "@everyone"
-     renderFields: true
-     timeout: 10s
-     templateBody: |
-       Docker tag {{ .Entry.Image }} which you subscribed to through {{ .Entry.Provider }} provider has been released.
-      
-regopts:
-  - name: "myregistry"
-    username: [dockerhub_username]
-    password: [dockerhub_password]
-    timeout: 20s
-    insecureTLS: true
-  - name: "docker.io"
-    selector: image
-    username: [dockerhub_username]
-    password: [dockerhub_password]
-
+        
 providers:
   docker:
     watchStopped: true
@@ -88,6 +68,10 @@ export CORP_SECRET=""
 export AGENTID=""
 export MEDIA_ID=""
 export TOUSER="@all"
+
+# 4. discord配置
+export DISCORD_WEBHOOK=""
+export DISCORD_PICURL=""
 ```
 
 3.自行替换中括号内的内容，替换三个路径。
