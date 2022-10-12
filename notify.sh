@@ -15,6 +15,8 @@ export DIUN_ENTRY_PLATFORM111=$DIUN_ENTRY_PLATFORM
 imagename1="$(echo "$DIUN_ENTRY_IMAGE111" | cut -d / -f3)"
 imagename2="$(echo "$DIUN_ENTRY_IMAGE111" | cut -d / -f2-3)"
 imagename3="$(echo "$imagename1" | cut -d : -f1)"
+# 通知标题首字母大写
+imagename3="$(echo ${imagename3:0:1} | tr '[a-z]' '[A-Z]')${imagename3:1}"
 imagename="$(echo "$imagename1" | sed 's/[:][:]*//g')"
 DIUN_ENTRY_CREATED222="$(echo "$DIUN_ENTRY_CREATED111" | cut -d . -f1)"
 time_end="$(echo "$DIUN_ENTRY_CREATED111" | cut -d \  -f3)"
