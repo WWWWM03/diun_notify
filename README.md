@@ -98,7 +98,7 @@ docker exec -it [容器名] diun notif test
 
 ![image](https://user-images.githubusercontent.com/74545085/194116386-1477a9cb-35f5-45d8-ad24-2d5028bbfd85.png)TG推送通道
 
-![image](https://user-images.githubusercontent.com/74545085/194116469-cc4d6046-c1c4-4bf9-b06c-daa6876e691c.png)discord推送通道
+![image](https://user-images.githubusercontent.com/74545085/195364047-7779a712-4e16-4798-a098-f12ba929d082.png)discord推送通道
 
 ![image](https://user-images.githubusercontent.com/74545085/194116502-45a70cf9-5a66-4647-86d0-618d8ab2ef5c.png)TG推送通道
 
